@@ -2,7 +2,8 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 const port = 3000;
-app.use(express.json())
+app.use(express.json());
+const db = require('./models');
 
 app.get('/test', (request, response) => {
   console.log('solicitud', request)
@@ -45,7 +46,10 @@ app.post('/register', (request, response) => {
 
 
 
-
+// ejecutar modelos en la base de datos
+db.sequelize.sync({ force: false }).then(() => {
+  console.log('Sync Database');
+});
 
 
 app.listen(port, () => {
