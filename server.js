@@ -93,7 +93,18 @@ app.post('/register', async (request, response) => {
 
   console.log('Si llegamos abajo')
 
+})
 
+app.get('/list-users', async (request, response) =>{
+  const users = await User.findAll()
+
+  if(users === null){
+    response.status(500).json({error: true, message: 'Fallo consultando usuarios'})
+    return
+  }
+
+  response.status(200).json({error: false, data: users})
+  
 })
 
 
