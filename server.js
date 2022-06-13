@@ -5,6 +5,11 @@ const port = 3000;
 app.use(express.json());
 const db = require('./models');
 const User = db.user;
+const cors = require('cors');
+const corsOptions = {origin: '*'};
+app.use(cors(corsOptions));
+
+
 
 app.get('/test', (request, response) => {
   console.log('solicitud', request)
@@ -80,11 +85,11 @@ app.post('/register', async (request, response) => {
 
   const newUser = await User.create(user);
   if(newUser === null){
-    response.status(500).json({error: true, message: error})
+    response.status(500).json({error: true, message: 'error creando usuarios'})
     return
   }
   console.log('Enviando respuesta exitosa')
-  response.status(200).json({error: false, message: 'Se a registrado con exito', data: data})
+  response.status(200).json({error: false, message: 'Se a registrado con exito', data: newUser})
 
   console.log('Si llegamos abajo')
 
@@ -97,6 +102,9 @@ app.post('/register', async (request, response) => {
 db.sequelize.sync({ force: false }).then(() => {
   console.log('Sync Database');
 });
+
+
+
 
 
 app.listen(port, () => {
