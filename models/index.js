@@ -16,6 +16,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = require('./user.js')(sequelize, Sequelize);
+db.trans = require('./trans.js')(sequelize, Sequelize);
 
 
 // relaciones entre tablas
